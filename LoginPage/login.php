@@ -2,8 +2,13 @@
 
 session_start();
 
+// 1. EDIT DI SINI: Cek session di awal agar redirect sesuai role jika sudah login
 if (isset($_SESSION['user'])) {
-    header('Location: ../DashboardUser/dashboardUser.php');
+    if ($_SESSION['user']['role'] === 'admin') {
+        header('Location: ../DashboardAdmin/dashboardAdmin.php');
+    } else {
+        header('Location: ../DashboardUser/dashboardUser.php');
+    }
     exit;
 }
 
@@ -32,8 +37,6 @@ if (!$user || !password_verify($password, $user['password'])) {
     exit;
 }
 
-
-
 $_SESSION['user'] = [
     'id'       => $user['id'],
     'username' => $user['username'],
@@ -41,5 +44,12 @@ $_SESSION['user'] = [
     'role'     => $user['role'],
 ];
 
-header('Location: ../DashboardUser/dashboardUser.php');
+// 2. EDIT DI SINI: Logika percabangan setelah berhasil login
+if ($user['role'] === 'admin') {
+    // Jika rolenya admin, lempar ke dashboardAdmin.php
+    header('Location: ../DashboardAdmin/dashboardAdmin.php');
+} else {
+    // Jika rolenya user, lempar ke dashboardUser.php seperti bawaan sebelumnya
+    header('Location: ../DashboardUser/dashboardUser.php');
+}
 exit;
