@@ -1,0 +1,33 @@
+//*db = db_qtalk*//
+
+
+CREATE TABLE users (
+    id_user INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'user') DEFAULT 'user'
+);
+
+CREATE TABLE barang_lelang (
+    id_barang INT AUTO_INCREMENT PRIMARY KEY,
+    nama_barang VARCHAR(100) NOT NULL,
+    deskripsi_barang TEXT,
+    harga_barang DECIMAL(12,2) NOT NULL,
+    status_lelang ENUM('aktif', 'selesai', 'terjual') DEFAULT 'aktif'
+);
+
+CREATE TABLE bid (
+    id_bid INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    barang_id INT NOT NULL,
+    harga_tawar DECIMAL(12,2) NOT NULL,
+
+    FOREIGN KEY (user_id) REFERENCES users(id_user)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (barang_id) REFERENCES barang_lelang(id_barang)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
