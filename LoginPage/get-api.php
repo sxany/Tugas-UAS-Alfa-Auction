@@ -21,12 +21,13 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 try {
     $stmt = $pdo->prepare(
-        'INSERT INTO users (username, email, password) VALUES (:username, :email, :password)'
+        'INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, :role)'
     );
     $stmt->execute([
         ':username' => $username,
         ':email'    => $email,
         ':password' => password_hash($password, PASSWORD_BCRYPT),
+        ':role'     => 'user',
     ]);    
     
 } catch (PDOException $e) {

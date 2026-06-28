@@ -1,4 +1,4 @@
-//db = db_qtalk//
+//*db = db_qtalk*//
 
 
 CREATE TABLE users (
@@ -10,3 +10,6 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+//*admin role manual insertion*//
+INSERT INTO users (username, email, password, role)
+VALUES ('admin', 'Youremail@gmail.com', 'password', 'admin');

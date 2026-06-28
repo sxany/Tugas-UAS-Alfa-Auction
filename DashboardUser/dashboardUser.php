@@ -39,7 +39,7 @@ if (!isset($_SESSION['user'])) {
     <div>
     <h1>Selamat Datang di Dashboard User!</h1>
     <p>Ini adalah halaman dashboard setelah login berhasil.</p>
-    <button><a href="../logout.php">Logout</a></button>
+    <button><a href="../LoginPage/logout.php">Logout</a></button>
     <div>
 </body>
 </html>

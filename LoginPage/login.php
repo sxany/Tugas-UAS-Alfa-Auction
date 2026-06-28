@@ -3,7 +3,7 @@
 session_start();
 
 if (isset($_SESSION['user'])) {
-    header('Location: src/dashboardUser.php');
+    header('Location: ../DashboardUser/dashboardUser.php');
     exit;
 }
 
@@ -28,9 +28,11 @@ $stmt->execute([':username' => $username]);
 $user = $stmt->fetch();
 
 if (!$user || !password_verify($password, $user['password'])) {
-    header('Location: src/login.html?error=invalid');
+    header('Location: ../src/login.html?error=invalid');
     exit;
 }
+
+
 
 $_SESSION['user'] = [
     'id'       => $user['id'],
@@ -39,5 +41,5 @@ $_SESSION['user'] = [
     'role'     => $user['role'],
 ];
 
-header('Location: src/dashboardUser.php');
+header('Location: ../DashboardUser/dashboardUser.php');
 exit;
