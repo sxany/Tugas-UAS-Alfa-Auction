@@ -68,6 +68,30 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alfa Auction - Midnight Elegant</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+   //script timer countdown 
+<script>
+    const selesai = new Date('2026-07-01 20:00:00').getTime();
+
+    setInterval(() => {
+        const sisa = selesai - new Date().getTime();
+
+        if (sisa <= 0) {
+            document.getElementById('timer').innerText = 'Berakhir';
+            return;
+        }
+
+        const jam   = Math.floor(sisa / (1000 * 60 * 60));
+        const menit = Math.floor((sisa % (1000 * 60 * 60)) / (1000 * 60));
+        const detik = Math.floor((sisa % (1000 * 60)) / 1000);
+
+        document.getElementById('timer').innerText =
+            `${String(jam).padStart(2,'0')}:${String(menit).padStart(2,'0')}:${String(detik).padStart(2,'0')}`;
+
+    }, 1000);
+</script>
+//end script timer countdown
+
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans">
 
@@ -153,7 +177,8 @@ try {
                                         </div>
 
                                         <div class="flex justify-between items-center text-[10px] text-slate-500 mb-4 border-b border-indigo-950/30 pb-3">
-                                            <span class="flex items-center gap-1">⏳ <strong class="text-indigo-400/80">2 Jam Lagi (Gimik)</strong></span>
+                                            <span class="flex items-center gap-1">⏳ <strong class="text-indigo-400/80" id="timer">00:00:00</strong></span>
+
                                             <span class="bg-slate-950 px-2 py-0.5 rounded border border-indigo-950/30">💬 <?php echo $barang['total_penawaran']; ?> Taruhan</span>
                                         </div>
                                     </div>
