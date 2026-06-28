@@ -37,32 +37,28 @@ if ($aksi === 'toggle_status' && isset($_GET['status_sekarang'])) {
     }
 }
 
-// --- AKSI 2: DELETE BARANG ---
+// Contoh logika hapus di proses_aksi_admin.php
 if ($aksi === 'hapus') {
-    try {
-        // Mulai database transaction demi keamanan data relasi
-        $pdo->beginTransaction();
-        
-        // 1. Hapus dulu histori taruhan (bid) yang terikat dengan barang ini agar tidak error foreign key constraint
-        $query_delete_bid = "DELETE FROM bid WHERE barang_id = :id_barang";
-        $stmt_bid = $pdo->prepare($query_delete_bid);
-        $stmt_bid->execute([':id_barang' => $id_barang]);
-        
-        // 2. Baru hapus data barang utamanya
-        $query_delete_barang = "DELETE FROM barang_lelang WHERE id_barang = :id_barang";
-        $stmt_barang = $pdo->prepare($query_delete_barang);
-        $stmt_barang->execute([':id_barang' => $id_barang]);
-        
-        // Commit perubahan jika semua query sukses dijalankan
-        $pdo->commit();
-        
-        header('Location: dashboardAdmin.php?status=delete_success');
-        exit;
-    } catch (PDOException $e) {
-        // Rollback data jika ada error di tengah jalan
-        $pdo->rollBack();
-        die("Gagal menghapus data lelang: " . $e->getMessage());
+    $id = $_GET['id'];
+    
+    // 1. Ambil nama file gambar dulu dari DB sebelum dihapus
+    $stmt = $pdo->prepare("SELECT gambar FROM barang_lelang WHERE id_barang = :id");
+    $stmt->execute([':id' => $id]);
+    $barang = $stmt->fetch();
+    
+    if ($barang && !empty($barang['gambar'])) {
+        $path_foto = '../DashboardUser/img/' . $barang['gambar'];
+        if (file_exists($path_foto)) {
+            unlink($path_foto); // <-- INI DIA! Menghapus file dari galeri server
+        }
     }
+    
+    // 2. Baru jalankan query DELETE data di DB
+    $stmt = $pdo->prepare("DELETE FROM barang_lelang WHERE id_barang = :id");
+    $stmt->execute([':id' => $id]);
+    
+    header('Location: dashboardAdmin.php?status=delete_success');
+    exit;
 }
 
 // Jika ada parameter aneh yang masuk, kembalikan ke dashboard

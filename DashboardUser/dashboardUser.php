@@ -20,12 +20,13 @@ $id_user = 1;
 
 try {
     if ($tab_aktif === 'daftar') {
-        // QUERY TAB DAFTAR LELANG AKTIF
+        // QUERY TAB DAFTAR LELANG AKTIF (Pastikan sudah menarik kolom bl.gambar)
         $query = "
             SELECT 
                 bl.id_barang, 
                 bl.nama_barang, 
                 bl.deskripsi_barang, 
+                bl.gambar,
                 bl.harga_barang AS harga_awal,
                 IFNULL(MAX(b.harga_tawar), bl.harga_barang) AS harga_berjalan,
                 COUNT(b.id_bid) AS total_penawaran
@@ -38,7 +39,7 @@ try {
         $stmt = $pdo->query($query);
         $daftar_lelang = $stmt->fetchAll();
     } else if ($tab_aktif === 'penawaran') {
-        // --- QUERY BARU UNTUK TAB PENAWARAN SAYA (LEBIH RINGAN & PASTI SINKRON) ---
+        // QUERY TAB PENAWARAN SAYA
         $query = "
             SELECT 
                 bl.id_barang,
@@ -156,9 +157,25 @@ try {
                         <?php foreach ($daftar_lelang as $barang): ?>
                             <div class="bg-slate-900/80 rounded-2xl shadow-xl hover:shadow-indigo-950/20 overflow-hidden border border-indigo-950/60 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1">
                                 
-                                <div class="bg-gradient-to-br from-slate-800 to-indigo-950/50 h-44 w-full flex items-center justify-center text-indigo-300/70 font-bold border-b border-indigo-950/40">
-                                    📦 <?php echo htmlspecialchars($barang['nama_barang']); ?>
+                                <!-- ==================== VALIDASI & PEMANGGILAN GAMBAR DINAMIS GALERI ==================== -->
+                                <div class="h-44 w-full overflow-hidden border-b border-indigo-950/40 bg-slate-950 relative flex items-center justify-center group">
+                                    <?php if (!empty($barang['gambar']) && file_exists('img/' . $barang['gambar'])): ?>
+                                        <!-- Jika gambar ada di database & foldernya valid -->
+                                        <img src="img/<?php echo htmlspecialchars($barang['gambar']); ?>" 
+                                             alt="<?php echo htmlspecialchars($barang['nama_barang']); ?>" 
+                                             class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300">
+                                    <?php else: ?>
+                                        <!-- Fallback: Jika gambar kosong, tampilkan icon neon box -->
+                                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-950/30 to-slate-900 flex flex-col items-center justify-center gap-2">
+                                            <span class="text-3xl">📦</span>
+                                            <span class="text-[10px] uppercase tracking-wider text-indigo-400/60 font-semibold bg-slate-950/80 px-2.5 py-1 rounded-full border border-indigo-900/40">Belum Ada Gambar</span>
+                                        </div>
+                                    <?php endif; ?>
+                                    
+                                    <!-- Efek gradasi gelap elegan di bawah gambar -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
                                 </div>
+                                <!-- ====================================================================================== -->
 
                                 <div class="p-5 flex-1 flex flex-col justify-between">
                                     <div>
