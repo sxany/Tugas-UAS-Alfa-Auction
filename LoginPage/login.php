@@ -3,7 +3,7 @@
 session_start();
 
 if (isset($_SESSION['user'])) {
-    header('Location: src/dashboard.php');
+    header('Location: src/dashboardUser.php');
     exit;
 }
 
@@ -36,7 +36,8 @@ $_SESSION['user'] = [
     'id'       => $user['id'],
     'username' => $user['username'],
     'email'    => $user['email'],
+    'role'     => $user['role'],
 ];
 
-header('Location: src/dashboard.php');
+header('Location: src/dashboardUser.php');
 exit;

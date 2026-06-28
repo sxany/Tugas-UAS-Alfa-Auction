@@ -37,7 +37,7 @@ if (!isset($_SESSION['user'])) {
 </head>
 <body>
     <div>
-    <h1>Selamat Datang di Dashboard!</h1>
+    <h1>Selamat Datang di Dashboard User!</h1>
     <p>Ini adalah halaman dashboard setelah login berhasil.</p>
     <button><a href="../logout.php">Logout</a></button>
     <div>

@@ -1,7 +1,7 @@
 <?php
 
 $host     = 'localhost';
-$dbname   = 'db_datauser';
+$dbname   = 'db_qtalk';
 $username = 'root';
 $password = '';          
 
