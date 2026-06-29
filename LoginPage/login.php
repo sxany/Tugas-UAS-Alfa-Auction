@@ -1,14 +1,17 @@
 <?php
-
 session_start();
 
-if (isset($_SESSION['user'])) {
-    if ($_SESSION['user']['role'] === 'admin') {
+function redirectByRole($role) {
+    if ($role === 'admin') {
         header('Location: ../DashboardAdmin/dashboardAdmin.php');
     } else {
         header('Location: ../DashboardUser/dashboardUser.php');
     }
     exit;
+}
+
+if (isset($_SESSION['user'])) {
+    redirectByRole($_SESSION['user']['role']);
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -23,7 +26,7 @@ $password = trim($_POST['password'] ?? '');
 
 
 if (empty($username) || empty($password)) {
-    header('Location: src/login.html?error=empty');
+    header('Location: unauth.php?error=empty');
     exit;
 }
 
@@ -32,7 +35,7 @@ $stmt->execute([':username' => $username]);
 $user = $stmt->fetch();
 
 if (!$user || !password_verify($password, $user['password'])) {
-    header('Location: ../src/login.html?error=invalid');
+    header('Location: unauth.php?error=invalid');
     exit;
 }
 
@@ -43,11 +46,5 @@ $_SESSION['user'] = [
     'role'     => $user['role'],
 ];
 
-if ($user['role'] === 'admin') {
-   
-    header('Location: ../DashboardAdmin/dashboardAdmin.php');
-} else {
-    
-    header('Location: ../DashboardUser/dashboardUser.php');
-}
-exit;
+redirectByRole($user['role']);
+?>
