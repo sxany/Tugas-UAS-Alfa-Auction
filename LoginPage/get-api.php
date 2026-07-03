@@ -11,22 +11,83 @@ $email    = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
 if (empty($username) || empty($email) || empty($password)) {
-    die('Semua field wajib diisi');
+    header('Location: unauth.php?error=otpempty&from=otp');
+    exit();
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    die('Email tidak valid');
+    header('Location: unauth.php?error=emailinvalid&from=otp');
+    exit();
 }
+
 
 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 $otp = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
-$otpExpires = date('Y-m-d H:i:s', strtotime('+5 minutes'));
+
+//cek users kalau ada data sama
+$check = $pdo->prepare("
+    SELECT *
+    FROM users
+    WHERE username = :username
+       OR email = :email
+    LIMIT 1
+");
+
+$check->execute([
+    ':username' => $username,
+    ':email'    => $email
+]);
+
+$tempUser = $check->fetch();
+
+if ($tempUser) {
+    header('Location: unauth.php?error=alreadyregistered&from=regis');
+    exit;
+}
+
+//cek temp registrations
+$check = $pdo->prepare("
+    SELECT * FROM temp_registrations
+    WHERE username = :username OR email = :email
+    LIMIT 1
+");
+
+$check->execute([
+    ':username' => $username,
+    ':email'    => $email
+]);
+
+$data = $check->fetch(PDO::FETCH_ASSOC);
+
+if ($data) {
+    $sameUsername = ($data['username'] === $username);
+    $sameEmail    = ($data['email'] === $email);
+    $samePassword = password_verify($password, $data['password']);
+
+    if ($sameUsername && $sameEmail && $samePassword) {
+        $_SESSION['pending_email'] = $email;
+        header('Location: src/verify.php');
+        exit;
+    }
+    else if ($sameUsername) {
+        header('Location: unauth.php?error=usernametaken&from=regis');
+        exit;
+    }
+    else if ($samePassword) {
+        header('Location: unauth.php?error=passwordwrong&from=regis');
+        exit;
+    }
+    else if ($sameEmail) {
+        header('Location: unauth.php?error=emailtaken&from=regis');
+        exit;
+    }
+}
 
 try {
     $stmt = $pdo->prepare("
         INSERT INTO temp_registrations
-        (username, email, password, role, otp, otp_expires)
-        VALUES (:username, :email, :password, :role, :otp, :otp_expires)
+        (username, email, password, role, otp)
+        VALUES (:username, :email, :password, :role, :otp)
     ");
 
     $stmt->execute([
@@ -34,8 +95,7 @@ try {
         ':email' => $email,
         ':password' => $hashedPassword,
         ':role' => 'user',
-        ':otp' => $otp,
-        ':otp_expires' => $otpExpires
+        ':otp' => $otp
     ]);
 } catch (PDOException $e) {
     die($e->getMessage());
@@ -62,13 +122,12 @@ try {
         <h2>Halo {$username}</h2>
         <p>Kode OTP kamu:</p>
         <h1>{$otp}</h1>
-        <p>Berlaku 5 menit.</p>
     ";
 
     $mail->send();
     $_SESSION['pending_email'] = $email;
-header('Location: src/verify-otp.html');
-exit;
+    header('Location: src/verify.php');
+    exit;
 } catch (Exception $e) {
     echo $mail->ErrorInfo;
 }
