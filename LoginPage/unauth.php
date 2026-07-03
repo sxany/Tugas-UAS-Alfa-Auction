@@ -2,9 +2,15 @@
 $error = $_GET['error'] ?? 'unauth';
 $from  = $_GET['from'] ?? '';
 
-$target = ($from === 'otp')
-    ? 'src/verify-otp.html'
-    : 'src/login.html';
+if ($from === 'otp') {
+    $target = 'src/verify.php';
+} 
+else if ($from === 'regis') {
+    $target = 'src/index.html';
+}
+else {
+    $target = 'src/login.html';
+}
 ?>
 
 <!DOCTYPE html>
@@ -50,6 +56,60 @@ else if (error === "emailnotfound") {
         window.location.href = targetUrl;
     });
 }
+else if (error === "pending") {
+    Swal.fire({
+        icon: "warning",
+        title: "Verifikasi Diperlukan",
+        text: "Silakan verifikasi email Anda terlebih dahulu"
+    }).then(() => {
+        window.location.href = targetUrl;
+    });
+}
+else if (error === "alreadyregistered") {
+    Swal.fire({
+        icon: "error",
+        title: "Registrasi Gagal",
+        text: "Username atau Email sudah terdaftar"
+    }).then(() => {
+        window.location.href = targetUrl;
+    });
+}
+else if (error === "usernametaken") {
+    Swal.fire({
+        icon: "error",
+        title: "Registrasi Gagal",
+        text: "Username sudah digunakan"
+    }).then(() => {
+        window.location.href = targetUrl;
+    });
+}
+else if (error === "passwordwrong") {
+    Swal.fire({
+        icon: "error",
+        title: "Verifikasi Gagal",
+        text: "Password salah"
+    }).then(() => {
+        window.location.href = targetUrl;
+    });
+}
+else if (error === "emailtaken") {
+    Swal.fire({
+        icon: "error",
+        title: "Registrasi Gagal",
+        text: "Email sudah digunakan"
+    }).then(() => {
+        window.location.href = targetUrl;
+    });
+}
+else if (error === "retry") {
+    Swal.fire({
+        icon: "warning",
+        title: "Unauthorized",
+        text: "Silakan lakukan registrasi ulang"
+    }).then(() => {
+        window.location.href = targetUrl;
+    });
+}
 else if (error === "otpempty") {
     Swal.fire({
         icon: "warning",
@@ -62,17 +122,8 @@ else if (error === "otpempty") {
 else if (error === "otpinvalid") {
     Swal.fire({
         icon: "error",
-        title: "Login Gagal",
+        title: "Verifikasi Gagal",
         text: "OTP salah"
-    }).then(() => {
-        window.location.href = targetUrl;
-    });
-}
-else if (error === "otpexpired") {
-    Swal.fire({
-        icon: "error",
-        title: "Login Gagal",
-        text: "OTP expired"
     }).then(() => {
         window.location.href = targetUrl;
     });
