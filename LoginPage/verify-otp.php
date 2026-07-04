@@ -61,7 +61,6 @@ try {
 
     
     unset($_SESSION['pending_email']);
-
     
     $_SESSION['user'] = [
         'id'       => $userId,
@@ -69,15 +68,9 @@ try {
         'email'    => $data['email'],
         'role'     => $data['role']
     ];
-
-
-    if ($data['role'] === 'admin') {
-        header("Location: ../DashboardAdmin/dashboardAdmin.php");
-    } else {
-        header("Location: ../DashboardUser/dashboardUser.php");
-    }
-    exit;
-
+header("Location: success.php?success=verified");
+exit();
+    
 } catch (PDOException $e) {
     die($e->getMessage());
 }
