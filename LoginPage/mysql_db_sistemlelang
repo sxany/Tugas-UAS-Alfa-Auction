@@ -14,7 +14,8 @@ CREATE TABLE barang_lelang (
     nama_barang VARCHAR(100) NOT NULL,
     deskripsi_barang TEXT,
     harga_barang DECIMAL(12,2) NOT NULL,
-    status_lelang ENUM('aktif', 'selesai', 'terjual') DEFAULT 'aktif'
+    status_lelang ENUM('aktif', 'selesai', 'terjual') DEFAULT 'aktif',
+    gambar VARCHAR(255)
 );
 
 CREATE TABLE bid (
