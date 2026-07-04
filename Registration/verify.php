@@ -1,9 +1,17 @@
+<?php
+session_start();
+if (!isset($_SESSION['pending_email'])) {
+    header('Location: /../Permission/unauth.php?error=retry&from=regis');
+    die();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran</title>
+    <title>Verifikasi OTP</title>
     <style>
         * {
             box-sizing: border-box;
@@ -20,13 +28,12 @@
             font-family: sans-serif;
         }
 
-        .login-card {
+        .otp-card {
             background-color: #ffffff;
-            padding: 30px 36px;
+            padding: 40px 36px;
             border-radius: 12px;
             border: 1px solid #e8e8e8;
             width: 320px;
-            
         }
 
         h1 {
@@ -34,10 +41,17 @@
             font-weight: 500;
             color: #111111;
             text-align: center;
-            
+            margin-bottom: 8px;
         }
 
-        
+        .subtitle {
+            font-size: 14px;
+            color: #999999;
+            text-align: center;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
         .input-group {
             margin-bottom: 16px;
         }
@@ -56,18 +70,6 @@
             border: 1px solid #e0e0e0;
             border-radius: 6px;
             font-size: 14px;
-            color: #111111;
-            background: #ffffff;
-            transition: border-color 0.2s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #aaaaaa;
-        }
-
-        input::placeholder {
-            color: #bbbbbb;
         }
 
         button {
@@ -78,22 +80,12 @@
             border: none;
             border-radius: 6px;
             font-size: 14px;
-            font-weight: 500;
             cursor: pointer;
             margin-top: 8px;
-            transition: background-color 0.2s;
         }
 
         button:hover {
             background-color: #333333;
-        }
-
-        p {
-            text-align: center;
-            font-size: 13px;
-            color: #999999;
-            margin-top: 20px;
-            margin-bottom: 0;
         }
 
         a {
@@ -105,29 +97,25 @@
         a:hover {
             text-decoration: underline;
         }
+
+        p {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #999;
+        }
     </style>
 </head>
 <body>
-    <div class="login-card">
-        <h1 style="margin-bottom: 5px;">Pendaftaran</h1>
-        <form action="../get-api.php" method="POST">
+    <div class="otp-card">
+        <h1>Verifikasi OTP</h1>
+        <p class="subtitle">Masukkan kode OTP yang telah dikirim ke email kamu</p>
+        <form action="verify-otp.php" method="POST">
             <div class="input-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" placeholder="" required>
+                <input type="text" id="otp" name="otp" placeholder="Masukkan OTP" required>
             </div>
-
-            <div class="input-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="" required>
-            </div>
-
-            <div class="input-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="" required>
-            </div>
-
-            <button type="submit">Daftar</button>
-            <p>Sudah punya akun? <a href="login.html">Login di sini</a></p>
+            <button type="submit">Verifikasi</button>
+            <p> Belum menerima OTP? <a href="resend-otp.php">Kirim Ulang</a></p>
         </form>
     </div>
 </body>

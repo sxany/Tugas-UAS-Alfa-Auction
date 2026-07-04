@@ -4,16 +4,19 @@ $error = $_GET['error'] ?? '';
 $from  = $_GET['from'] ?? '';
 
 if ($from === 'otp') {
-    $target = 'src/verify.php';
+    $target = '/../Registration/verify.php';
 } 
 else if ($from === 'regis') {
-    $target = 'src/index.html';
+    $target = '/../Registration/index.html';
 }
 else if ($from === 'reset') {
-    $target = 'verify-otp-reset-pass-page.php';
+    $target = '/../ForgotPass/verify-otp-reset-pass-page.php';
+}
+else if ($from === 'forgot') {
+    $target = '/../ForgotPass/forgot-password.html';
 }
 else {
-    $target = 'src/login.html';
+    $target = '/../LoginPage/src/login.html';
 }
 ?> 
 
@@ -57,7 +60,7 @@ else if (error === "emailnotfound") {
     Swal.fire({
         icon: "error",
         title: "Login Gagal",
-        text: "Email tidak ditemukan di session"
+        text: "Email tidak ditemukan"
     }).then(() => {
         window.location.href = targetUrl;
     });
@@ -133,6 +136,24 @@ else if (error === "otpinvalid") {
 }
 
 // reset password 
+else if (error === "emailnotfound2") {
+    Swal.fire({
+        icon: "error",
+        title: "Reset Password Gagal",
+        text: "User tidak ditemukan"
+    }).then(() => {
+        window.location.href = targetUrl;
+    });
+}
+else if (error === "otpresetempty") {
+    Swal.fire({
+        icon: "warning",
+        title: "Form Kosong",
+        text: "OTP wajib diisi"
+    }).then(() => {
+        window.location.href = targetUrl;
+    });
+}
 else if (error === "otpresetinvalid") {
     Swal.fire({
         icon: "error",

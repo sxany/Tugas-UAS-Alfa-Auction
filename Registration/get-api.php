@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/koneksi.php';
+require_once __DIR__ . '/../LoginPage/vendor/autoload.php';
+require_once __DIR__ . '/../LoginPage/koneksi.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -11,12 +11,12 @@ $email    = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
 if (empty($username) || empty($email) || empty($password)) {
-    header('Location: unauth.php?error=otpempty&from=otp');
+    header('Location: /../Permission/unauth.php?error=otpempty&from=otp');
     exit();
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header('Location: unauth.php?error=emailinvalid&from=otp');
+    header('Location: /../Permission/unauth.php?error=emailinvalid&from=otp');
     exit();
 }
 
@@ -38,7 +38,7 @@ $check->execute([
 $tempUser = $check->fetch();
 
 if ($tempUser) {
-    header('Location: unauth.php?error=usernameregistered&from=regis');
+    header('Location: /../Permission/unauth.php?error=usernameregistered&from=regis');
     exit;
 }
 
@@ -57,7 +57,7 @@ $check->execute([
 $tempUser = $check->fetch();
 
 if ($tempUser) {
-    header('Location: unauth.php?error=emailregistered&from=regis');
+    header('Location: /../Permission/unauth.php?error=emailregistered&from=regis');
     exit;
 }
 
@@ -82,15 +82,15 @@ if ($data) {
 
     if ($sameUsername && $sameEmail && $samePassword) {
         $_SESSION['pending_email'] = $email;
-        header('Location: src/verify.php');
+        header('Location: verify.php');
         exit;
     }
     else if ($sameUsername) {
-        header('Location: unauth.php?error=usernametaken&from=regis');
+        header('Location: /../Permission/unauth.php?error=usernametaken&from=regis');
         exit;
     }
     else if ($sameEmail) {
-        header('Location: unauth.php?error=emailtaken&from=regis');
+        header('Location: /../Permission/unauth.php?error=emailtaken&from=regis');
         exit;
     }
 }
@@ -138,7 +138,7 @@ try {
 
     $mail->send();
     $_SESSION['pending_email'] = $email;
-    header('Location: src/verify.php');
+    header('Location: verify.php');
     exit;
 } catch (Exception $e) {
     echo $mail->ErrorInfo;

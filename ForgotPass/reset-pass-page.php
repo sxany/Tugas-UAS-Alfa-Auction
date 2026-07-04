@@ -1,9 +1,18 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['reset_verified'])) {
+    header('Location: /../Permission/unauth.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lupa Password</title>
+    <title>Reset Password</title>
+
     <style>
         * {
             box-sizing: border-box;
@@ -48,14 +57,6 @@
             margin-bottom: 16px;
         }
 
-        label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: #555555;
-            margin-bottom: 6px;
-        }
-
         input {
             width: 100%;
             padding: 10px 12px;
@@ -64,16 +65,11 @@
             font-size: 14px;
             color: #111111;
             background: #ffffff;
-            transition: border-color 0.2s;
         }
 
         input:focus {
             outline: none;
             border-color: #aaaaaa;
-        }
-
-        input::placeholder {
-            color: #bbbbbb;
         }
 
         button {
@@ -84,55 +80,33 @@
             border: none;
             border-radius: 6px;
             font-size: 14px;
-            font-weight: 500;
             cursor: pointer;
             margin-top: 8px;
-            transition: background-color 0.2s;
         }
 
         button:hover {
             background-color: #333333;
         }
-
-        p {
-            text-align: center;
-            font-size: 13px;
-            color: #999999;
-            margin-top: 20px;
-        }
-
-        a {
-            color: #111111;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
-
 <body>
 <div class="login-card">
-    <h1>Lupa Password</h1>
+    <h1>Reset Password</h1>
     <p class="subtitle">
-        Masukkan email yang terdaftar untuk menerima kode OTP.
+        Masukkan password baru untuk akun Anda.
     </p>
-    <form action="../generate-otp-reset-pass.php" method="POST">
+    <form action="reset-pass.php" method="POST">
         <div class="input-group">
             <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Masukkan email"
+                type="password"
+                name="password"
+                placeholder="Password Baru"
                 required
             >
         </div>
-        <button type="submit">Kirim OTP</button>
-        <p>
-            Kembali ke <a href="login.html">Login</a>
-        </p>
+        <button type="submit">
+            Simpan Password
+        </button>
     </form>
 </div>
 </body>

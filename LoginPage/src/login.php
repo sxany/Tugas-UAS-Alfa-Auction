@@ -3,9 +3,9 @@ session_start();
 
 function redirectByRole($role) {
     if ($role === 'admin') {
-        header('Location: ../DashboardAdmin/dashboardAdmin.php');
+        header('Location: /../DashboardAdmin/dashboardAdmin.php');
     } else {
-        header('Location: ../DashboardUser/dashboardUser.php');
+        header('Location: /../DashboardUser/dashboardUser.php');
     }
     exit;
 }
@@ -15,18 +15,18 @@ if (isset($_SESSION['user'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: src/login.html');
+    header('Location: login.html');
     exit;
 }
 
-require_once __DIR__ . '/koneksi.php';
+require_once __DIR__ . '/../koneksi.php';
 
 $username = trim($_POST['username'] ?? '');
 $password = trim($_POST['password'] ?? '');
 
 
 if (empty($username) || empty($password)) {
-    header('Location: unauth.php?error=empty');
+    header('Location: /../Permission/unauth.php?error=empty');
     exit;
 }
 
@@ -35,7 +35,7 @@ $stmt->execute([':username' => $username]);
 $user = $stmt->fetch();
 
 if (!$user || !password_verify($password, $user['password'])) {
-    header('Location: unauth.php?error=invalid');
+    header('Location: /../Permission/unauth.php?error=invalid');
     exit;
 }
 

@@ -1,5 +1,5 @@
 <?php
-require_once '../LoginPage/authAdmin.php';
+require_once '../Permission/authAdmin.php';
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +35,7 @@ require_once '../LoginPage/authAdmin.php';
     <div>
     <h1>Selamat Datang di DashboardAdmin!</h1>
     <p>Ini adalah halaman dashboard setelah login berhasil.</p>
-    <button><a href="../LoginPage/logout.php">Logout</a></button>
+    <button><a href="../LoginPage/src/logout.php">Logout</a></button>
     <div>
 </body>
 </html>

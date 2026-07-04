@@ -3,10 +3,10 @@ $success = $_GET['success']??'';
 $from  = $_GET['from'] ?? '';
 
 if ($from === 'otp') {
-    $target = 'src/verify.php';
+    $target = '/../Registration/verify.php';
 } 
 else {
-    $target = 'src/login.html';
+    $target = '/../LoginPage/src/login.html';
 }
 
 ?>

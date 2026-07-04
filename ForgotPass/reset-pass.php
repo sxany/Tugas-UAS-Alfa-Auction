@@ -1,16 +1,16 @@
 <?php
 session_start();
-require_once __DIR__ . '/koneksi.php';
+require_once __DIR__ . '/../LoginPage/koneksi.php';
 
 if (!isset($_SESSION['reset_verified'])) {
-    header('Location: unauth.php');
+    header('Location: /../Permission/unauth.php');
     exit();
 }
 
 $password = trim($_POST['password'] ?? '');
 
 if (empty($password)) {
-    header('Location: unauth.php');
+    header('Location: /../Permission/unauth.php');
     exit();
 }
 
@@ -28,5 +28,5 @@ $update->execute([
 ]);
 
 unset($_SESSION['reset_verified']);
-header('Location: success.php?success=resetpass');
+header('Location: /../Permission/success.php?success=resetpass');
 exit();

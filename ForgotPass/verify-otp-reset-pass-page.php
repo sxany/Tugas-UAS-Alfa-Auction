@@ -1,7 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION['pending_email'])) {
-    header('Location: ../unauth.php?error=retry&from=regis');
+if (!isset($_SESSION['reset_pass'])) {
+    header('Location: ../Permission/unauth.php');
     die();
 }
 ?>
@@ -56,20 +56,17 @@ if (!isset($_SESSION['pending_email'])) {
             margin-bottom: 16px;
         }
 
-        label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: #555555;
-            margin-bottom: 6px;
-        }
-
         input {
             width: 100%;
             padding: 10px 12px;
             border: 1px solid #e0e0e0;
             border-radius: 6px;
             font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #aaaaaa;
         }
 
         button {
@@ -88,6 +85,13 @@ if (!isset($_SESSION['pending_email'])) {
             background-color: #333333;
         }
 
+        p {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #999999;
+        }
+
         a {
             color: #111111;
             text-decoration: none;
@@ -97,26 +101,29 @@ if (!isset($_SESSION['pending_email'])) {
         a:hover {
             text-decoration: underline;
         }
-
-        p {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 13px;
-            color: #999;
-        }
     </style>
 </head>
 <body>
-    <div class="otp-card">
-        <h1>Verifikasi OTP</h1>
-        <p class="subtitle">Masukkan kode OTP yang telah dikirim ke email kamu</p>
-        <form action="../verify-otp.php" method="POST">
-            <div class="input-group">
-                <input type="text" id="otp" name="otp" placeholder="Masukkan OTP" required>
-            </div>
-            <button type="submit">Verifikasi</button>
-            <p> Belum menerima OTP? <a href="../resend-otp.php">Kirim Ulang</a></p>
-        </form>
-    </div>
+<div class="otp-card">
+    <h1>Verifikasi OTP</h1>
+    <p class="subtitle">
+        Masukkan kode verifikasi OTP yang telah dikirim ke email Anda.
+    </p>
+    <form action="verify-otp-reset-pass.php" method="POST">
+        <div class="input-group">
+            <input
+                type="text"
+                id="otp"
+                name="otp"
+                placeholder="Masukkan OTP"
+                required>
+        </div>
+        <button type="submit">Verifikasi</button>
+        <p>
+            Belum menerima OTP?
+            <a href="resend-otp-reset-pass.php">Kirim Ulang</a>
+        </p>
+    </form>
+</div>
 </body>
 </html>

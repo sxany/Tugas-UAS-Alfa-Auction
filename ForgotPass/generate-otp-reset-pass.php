@@ -1,8 +1,8 @@
     <?php
 session_start();
 
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/koneksi.php';
+require_once __DIR__ . '/../LoginPage/vendor/autoload.php';
+require_once __DIR__ . '/../LoginPage/koneksi.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\Exception;
 $email = trim($_POST['email'] ?? '');
 
 if (empty($email)) {
-    header('Location: unauth.php');
+    header('Location: /../Permission/unauth.php');
     exit();
 }
 
@@ -29,7 +29,7 @@ $stmt->execute([
 $user = $stmt->fetch();
 
 if (!$user) {
-    header('Location: unauth.php');
+    header('Location: /../Permission/unauth.php?error=emailnotfound2&from=forgot');
     exit();
 }
 

@@ -1,10 +1,10 @@
 <?php
 session_start();
-require_once __DIR__ . '/koneksi.php';
+require_once __DIR__ . '/../LoginPage/koneksi.php';
 
 // Pastikan berasal dari proses forgot password
 if (!isset($_SESSION['reset_pass'])) 
-    { header('Location: unauth.php?');
+    { header('Location: /../Permission/unauth.php?');
     exit();
 }
 
@@ -12,7 +12,7 @@ $email = $_SESSION['reset_email'];
 $otp   = trim($_POST['otp'] ?? '');
 
 if (empty($otp)) {
-    header('Location: unauth.php');
+    header('Location: /../Permission/unauth.php');
     exit();
 }
 
@@ -32,7 +32,7 @@ $stmt->execute([
 $data = $stmt->fetch();
 
 if (!$data) {
-    header('Location: unauth.php?error=otpresetinvalid&from=reset');
+    header('Location: /../Permission/unauth.php?error=otpresetinvalid&from=reset');
     exit();
 }
 

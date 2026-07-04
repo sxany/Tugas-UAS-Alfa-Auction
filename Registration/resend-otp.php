@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/koneksi.php';
+require_once __DIR__ . '/../LoginPage/vendor/autoload.php';
+require_once __DIR__ . '/../LoginPage/koneksi.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 if (!isset($_SESSION['pending_email'])) {
-    header('Location: unauth.php?error=emailnotfound');
+    header('Location: /../Permission/unauth.php?error=emailnotfound');
     exit();
 }
 
@@ -29,7 +29,7 @@ $stmt->execute([
 $data = $stmt->fetch();
 
 if (!$data) {
-    header('Location: unauth.php?error=emailnotfound');
+    header('Location: /../Permission/unauth.php?error=emailnotfound');
     exit();
 }
 
@@ -80,7 +80,7 @@ try {
 
     $mail->send();
 
-    header('Location: success.php?success=resend&from=otp');
+    header('Location: /../Permission/success.php?success=resend&from=otp');
     exit();
 
 } catch (Exception $e) {

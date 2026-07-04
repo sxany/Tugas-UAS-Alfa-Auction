@@ -1,17 +1,17 @@
 <?php
 session_start();
-require_once __DIR__ . '/koneksi.php';
+require_once __DIR__ . '/../LoginPage/koneksi.php';
 
 $email = $_SESSION['pending_email'] ?? null;
 $otp   = trim($_POST['otp'] ?? '');
 
 if (!$email) {
-    header('Location: unauth.php?error=emailnotfound&from=otp');
+    header('Location: /../Permission/unauth.php?error=emailnotfound&from=otp');
     die();
 }
 
 if (empty($otp)) {
-    header('Location: unauth.php?error=otpempty&from=otp');
+    header('Location: /../Permission/unauth.php?error=otpempty&from=otp');
     die();
 }
 
@@ -30,7 +30,7 @@ $stmt->execute([
 $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$data) {
-    header('Location: unauth.php?error=otpinvalid&from=otp');
+    header('Location: /../Permission/unauth.php?error=otpinvalid&from=otp');
     die();
 }
 try {
@@ -67,7 +67,7 @@ try {
         'email'    => $data['email'],
         'role'     => $data['role']
     ];
-header("Location: success.php?success=verified");
+header("Location: /../Permission/success.php?success=verified");
 exit();
     
 } catch (PDOException $e) {
