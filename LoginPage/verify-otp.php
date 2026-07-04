@@ -2,7 +2,6 @@
 session_start();
 require_once __DIR__ . '/koneksi.php';
 
-
 $email = $_SESSION['pending_email'] ?? null;
 $otp   = trim($_POST['otp'] ?? '');
 
