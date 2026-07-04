@@ -32,3 +32,31 @@ CREATE TABLE bid (
         ON UPDATE CASCADE
         ON DELETE CASCADE
 );
+
+//Adding waktu//
+
+ALTER TABLE barang_lelang 
+ADD COLUMN waktu DATETIME NOT NULL DEFAULT '2026-12-31 23:59:59';
+
+//cek//
+DESCRIBE barang_lelang;
+
+
+//temp registration
+CREATE TABLE temp_registrations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) DEFAULT 'user',
+    otp VARCHAR(6) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+//table reset password
+CREATE TABLE password_resets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL,
+    otp VARCHAR(6) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
