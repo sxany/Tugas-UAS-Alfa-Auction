@@ -97,6 +97,13 @@ if (!isset($_SESSION['pending_email'])) {
         a:hover {
             text-decoration: underline;
         }
+
+        p {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #999;
+        }
     </style>
 </head>
 <body>
@@ -105,10 +112,10 @@ if (!isset($_SESSION['pending_email'])) {
         <p class="subtitle">Masukkan kode OTP yang telah dikirim ke email kamu</p>
         <form action="../verify-otp.php" method="POST">
             <div class="input-group">
-                <label for="otp">OTP:</label>
                 <input type="text" id="otp" name="otp" placeholder="Masukkan OTP" required>
             </div>
             <button type="submit">Verifikasi</button>
+            <p> Belum menerima OTP? <a href="../resend-otp.php">Kirim Ulang</a></p>
         </form>
     </div>
 </body>

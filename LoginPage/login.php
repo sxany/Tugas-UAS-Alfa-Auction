@@ -46,5 +46,5 @@ $_SESSION['user'] = [
     'role'     => $user['role'],
 ];
 
-redirectByRole($user['role']);
+redirectByRole($_SESSION['user']['role']);
 ?>

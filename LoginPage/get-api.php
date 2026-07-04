@@ -20,28 +20,44 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit();
 }
 
-
 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 $otp = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
 
-//cek users kalau ada data sama
+//cek username users kalau ada data sama
 $check = $pdo->prepare("
     SELECT *
     FROM users
     WHERE username = :username
-       OR email = :email
     LIMIT 1
 ");
 
 $check->execute([
     ':username' => $username,
-    ':email'    => $email
 ]);
 
 $tempUser = $check->fetch();
 
 if ($tempUser) {
-    header('Location: unauth.php?error=alreadyregistered&from=regis');
+    header('Location: unauth.php?error=usernameregistered&from=regis');
+    exit;
+}
+
+//cek email users kalau ada data sama
+$check = $pdo->prepare("
+    SELECT *
+    FROM users
+    WHERE email = :email
+    LIMIT 1
+");
+
+$check->execute([
+    ':email' => $email
+]);
+
+$tempUser = $check->fetch();
+
+if ($tempUser) {
+    header('Location: unauth.php?error=emailregistered&from=regis');
     exit;
 }
 
