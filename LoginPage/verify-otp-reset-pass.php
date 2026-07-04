@@ -32,7 +32,7 @@ $stmt->execute([
 $data = $stmt->fetch();
 
 if (!$data) {
-    header('Location: unauth.php');
+    header('Location: unauth.php?error=otpresetinvalid&from=reset');
     exit();
 }
 

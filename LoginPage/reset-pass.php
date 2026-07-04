@@ -28,5 +28,5 @@ $update->execute([
 ]);
 
 unset($_SESSION['reset_verified']);
-header('Location: src/login.html?reset=success');
+header('Location: success.php?success=resetpass');
 exit();

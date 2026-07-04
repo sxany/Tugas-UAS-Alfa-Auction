@@ -9,6 +9,9 @@ if ($from === 'otp') {
 else if ($from === 'regis') {
     $target = 'src/index.html';
 }
+else if ($from === 'reset') {
+    $target = 'verify-otp-reset-pass-page.php';
+}
 else {
     $target = 'src/login.html';
 }
@@ -120,6 +123,17 @@ else if (error === "otpempty") {
     });
 }
 else if (error === "otpinvalid") {
+    Swal.fire({
+        icon: "error",
+        title: "Verifikasi Gagal",
+        text: "OTP salah"
+    }).then(() => {
+        window.location.href = targetUrl;
+    });
+}
+
+// reset password 
+else if (error === "otpresetinvalid") {
     Swal.fire({
         icon: "error",
         title: "Verifikasi Gagal",

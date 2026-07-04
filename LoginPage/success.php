@@ -44,6 +44,15 @@ else if (success === "verified") {
         window.location.href = targetUrl;
     });
 }
+else if (success === "resetpass") {
+    Swal.fire({
+        icon: "success",
+        title: "Reset Password Berhasil",
+        text: "Password Anda telah berhasil diubah."
+    }).then(() => {
+        window.location.href = targetUrl;
+    });
+}
 </script>
 </body>
 </html>
