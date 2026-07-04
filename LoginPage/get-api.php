@@ -73,10 +73,6 @@ if ($data) {
         header('Location: unauth.php?error=usernametaken&from=regis');
         exit;
     }
-    else if ($samePassword) {
-        header('Location: unauth.php?error=passwordwrong&from=regis');
-        exit;
-    }
     else if ($sameEmail) {
         header('Location: unauth.php?error=emailtaken&from=regis');
         exit;

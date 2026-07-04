@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['pending_email'])) {
-    header('Location: unauth.php?error=retry&from=regis');
+    header('Location: ../unauth.php?error=retry&from=regis');
     die();
 }
 ?>
