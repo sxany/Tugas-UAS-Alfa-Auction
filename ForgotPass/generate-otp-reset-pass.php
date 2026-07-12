@@ -90,6 +90,7 @@ try {
     ";
 
     $mail->send();
+     $_SESSION['reset_pass'] = 'resetpass';
     header('Location: verify-otp-reset-pass-page.php');
     exit();
 
