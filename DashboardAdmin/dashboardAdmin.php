@@ -1,7 +1,6 @@
 <?php
 require_once '../Permission/authAdmin.php';
 
-
 require_once __DIR__ . '/../LoginPage/koneksi.php';
 
 try {
