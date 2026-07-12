@@ -119,10 +119,6 @@ if (!isset($_SESSION['reset_pass'])) {
                 required>
         </div>
         <button type="submit">Verifikasi</button>
-        <p>
-            Belum menerima OTP?
-            <a href="resend-otp-reset-pass.php">Kirim Ulang</a>
-        </p>
     </form>
 </div>
 </body>
