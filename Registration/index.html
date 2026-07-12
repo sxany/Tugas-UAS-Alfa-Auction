@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran</title>
+    <title>Pendaftaran - Alfa Auction</title>
     <style>
         * {
             box-sizing: border-box;
@@ -16,118 +16,134 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f5f5f5;
+            background-color: #020617; 
             font-family: sans-serif;
         }
 
-        .login-card {
-            background-color: #ffffff;
-            padding: 30px 36px;
+        .register-card {
+            background-color: #0f172a; 
+            padding: 40px 36px;
             border-radius: 12px;
-            border: 1px solid #e8e8e8;
-            width: 320px;
-            
+            border: 1px solid #1e293b; 
+            width: 340px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
 
         h1 {
-            font-size: 22px;
-            font-weight: 500;
-            color: #111111;
+            font-size: 24px;
+            font-weight: 700;
+            color: #f8fafc; 
             text-align: center;
-            
+            margin-bottom: 6px;
         }
 
-        
+        .subtitle {
+            font-size: 13px;
+            color: #64748b; 
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
         .input-group {
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         label {
             display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: #555555;
+            font-size: 12px;
+            font-weight: 600;
+            color: #94a3b8; 
             margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         input {
             width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
+            padding: 11px 14px;
+            border: 1px solid #1e293b; 
+            border-radius: 8px;
             font-size: 14px;
-            color: #111111;
-            background: #ffffff;
-            transition: border-color 0.2s;
+            color: #ffffff;
+            background: #020617; 
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         input:focus {
             outline: none;
-            border-color: #aaaaaa;
+            border-color: #2563eb; 
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
         }
 
         input::placeholder {
-            color: #bbbbbb;
+            color: #475569; 
         }
 
         button {
             width: 100%;
-            padding: 11px;
-            background-color: #111111;
+            padding: 12px;
+            background-color: #2563eb;
             color: #ffffff;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 8px;
-            transition: background-color 0.2s;
+            margin-top: 6px;
+            transition: background-color 0.2s, transform 0.1s;
         }
 
         button:hover {
-            background-color: #333333;
+            background-color: #1d4ed8; 
+        }
+
+        button:active {
+            transform: scale(0.98);
         }
 
         p {
             text-align: center;
             font-size: 13px;
-            color: #999999;
-            margin-top: 20px;
-            margin-bottom: 0;
+            color: #64748b;
+            margin-top: 24px;
         }
 
         a {
-            color: #111111;
+            color: #3b82f6; 
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
+            transition: color 0.2s;
         }
 
         a:hover {
+            color: #60a5fa;
             text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div class="login-card">
-        <h1 style="margin-bottom: 5px;">Pendaftaran</h1>
-        <form action="get-api.php" method="POST">
+    <div class="register-card">
+        <h1>Pendaftaran</h1>
+        <div class="subtitle">Buat akun baru Alfa Auction</div>
+        
+        <form action="../get-api.php" method="POST">
             <div class="input-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" placeholder="" required>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Buat username baru" required>
             </div>
 
             <div class="input-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Buat password rumit" required>
             </div>
 
             <div class="input-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Contoh: user@gmail.com" required>
             </div>
 
-            <button type="submit">Daftar</button>
-            <p>Sudah punya akun? <a href="/LoginPage/src/login.html">Login di sini</a></p>
+            <button type="submit">Daftar Akun Baru</button>
+            <p>Sudah punya akun? <a href="../LoginPage/src/login.html">Login di sini</a></p>
         </form>
     </div>
 </body>

@@ -40,7 +40,7 @@ if (!$user || !password_verify($password, $user['password'])) {
 }
 
 $_SESSION['user'] = [
-    'id'       => $user['id'],
+    'id_user'  => $user['id_user'],
     'username' => $user['username'],
     'email'    => $user['email'],
     'role'     => $user['role'],

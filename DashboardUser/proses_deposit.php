@@ -7,24 +7,19 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'user') {
     exit;
 }
 
-// 2. KONEKSI DATABASE (Menggunakan PDO bawaan proyekmu)
 require_once __DIR__ . '/../LoginPage/koneksi.php';
 
-// 3. PROSES VALIDASI FORM DATA
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-    // Menggunakan bypass ID user = 1 sesuai dengan struktur sistemmu saat ini
-    $id_user = $_SESSION['user']['id']; 
+    $id_user = $_SESSION['user']['id_user']; 
     $nominal = isset($_POST['nominal']) ? floatval($_POST['nominal']) : 0;
 
-    // Validasi: Nominal tidak boleh kurang dari Rp 10.000
     if ($nominal < 10000) {
         header('Location: dashboardUser.php?tab=deposit&status=nominal_low');
         exit;
     }
 
     try {
-        // Query UPDATE menambah nilai saldo di tabel users yang baru kamu update
         $query = "UPDATE users SET saldo = saldo + :nominal WHERE id_user = :id_user";
         $stmt = $pdo->prepare($query);
         $stmt->execute([
@@ -32,17 +27,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':id_user' => $id_user
         ]);
 
-        // Jika berhasil, balik ke dashboard membawa parameter sukses dan nominalnya
         header("Location: dashboardUser.php?tab=deposit&status=success&amount=" . $nominal);
         exit;
 
     } catch (PDOException $e) {
-        // Jika terjadi error pada database
-        header('Location: dashboardUser.php?tab=deposit&status=error');
-        exit;
+        echo "<pre style='color: white; background: red; padding: 20px; font-family: monospace;'>";
+        echo "=== ERROR DATABASE ===" . PHP_EOL;
+        echo "Pesan Error: " . $e->getMessage() . PHP_EOL;
+        echo "ID User saat ini: " . var_export($id_user, true) . PHP_EOL;
+        echo "Nominal input: " . var_export($nominal, true) . PHP_EOL;
+        echo "</pre>";
+        die();
     }
 } else {
-    // Jika file ini diakses langsung tanpa form POST
     header('Location: dashboardUser.php');
     exit;
 }
