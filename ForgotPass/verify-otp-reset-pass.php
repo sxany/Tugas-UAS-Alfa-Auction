@@ -2,7 +2,6 @@
 session_start();
 require_once __DIR__ . '/../LoginPage/koneksi.php';
 
-// Pastikan berasal dari proses forgot password
 if (!isset($_SESSION['reset_pass'])) 
     { header('Location: /../Permission/unauth.php?');
     exit();
@@ -45,7 +44,6 @@ $delete->execute([
     ':id' => $data['id']
 ]);
 
-unset($_SESSION['reset_pass']);
 $_SESSION['reset_verified'] = $email;
 header('Location: reset-pass-page.php');
 exit();
