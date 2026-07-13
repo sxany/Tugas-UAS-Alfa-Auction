@@ -28,5 +28,8 @@ $update->execute([
 ]);
 
 unset($_SESSION['reset_verified']);
+unset($_SESSION['reset_flow']);
+unset ($_SESSION['reset_email']);
+unset($_SESSION['reset_pass']);
 header('Location: /../Permission/success.php?success=resetpass');
 exit();
