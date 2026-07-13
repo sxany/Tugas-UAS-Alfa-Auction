@@ -3,7 +3,6 @@ session_start();
 
 require_once __DIR__ . '/../LoginPage/koneksi.php';
 
-// Validasi parameter URL mendasar
 if (!isset($_GET['aksi']) || !isset($_GET['id'])) {
     header('Location: dashboardAdmin.php');
     exit;
@@ -12,7 +11,6 @@ if (!isset($_GET['aksi']) || !isset($_GET['id'])) {
 $aksi = $_GET['aksi'];
 $id_barang = intval($_GET['id']);
 
-// --- AKSI 1: UPDATE STATUS LELANG (TOGGLE) ---
 if ($aksi === 'toggle_status' && isset($_GET['status_sekarang'])) {
     $status_baru = ($_GET['status_sekarang'] === 'aktif') ? 'selesai' : 'aktif';
     
@@ -31,11 +29,9 @@ if ($aksi === 'toggle_status' && isset($_GET['status_sekarang'])) {
     }
 }
 
-// Contoh logika hapus di proses_aksi_admin.php
 if ($aksi === 'hapus') {
     $id = $_GET['id'];
     
-    // 1. Ambil nama file gambar dulu dari DB sebelum dihapus
     $stmt = $pdo->prepare("SELECT gambar FROM barang_lelang WHERE id_barang = :id");
     $stmt->execute([':id' => $id]);
     $barang = $stmt->fetch();
@@ -43,11 +39,10 @@ if ($aksi === 'hapus') {
     if ($barang && !empty($barang['gambar'])) {
         $path_foto = '../DashboardUser/img/' . $barang['gambar'];
         if (file_exists($path_foto)) {
-            unlink($path_foto); // <-- INI DIA! Menghapus file dari galeri server
+            unlink($path_foto);
         }
     }
     
-    // 2. Baru jalankan query DELETE data di DB
     $stmt = $pdo->prepare("DELETE FROM barang_lelang WHERE id_barang = :id");
     $stmt->execute([':id' => $id]);
     
@@ -55,6 +50,5 @@ if ($aksi === 'hapus') {
     exit;
 }
 
-// Jika ada parameter aneh yang masuk, kembalikan ke dashboard
 header('Location: dashboardAdmin.php');
 exit;

@@ -14,7 +14,6 @@ if (!isset($_SESSION['pending_email'])) {
 
 $email = $_SESSION['pending_email'];
 
-// Cari data user yang masih pending
 $stmt = $pdo->prepare("
     SELECT username
     FROM temp_registrations

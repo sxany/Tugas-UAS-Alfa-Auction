@@ -23,7 +23,6 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 $otp = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
 
-//cek username users kalau ada data sama
 $check = $pdo->prepare("
     SELECT *
     FROM users
@@ -42,7 +41,6 @@ if ($tempUser) {
     exit;
 }
 
-//cek email users kalau ada data sama
 $check = $pdo->prepare("
     SELECT *
     FROM users
@@ -61,7 +59,6 @@ if ($tempUser) {
     exit;
 }
 
-//cek temp registrations
 $check = $pdo->prepare("
     SELECT * FROM temp_registrations
     WHERE username = :username OR email = :email

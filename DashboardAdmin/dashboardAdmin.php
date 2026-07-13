@@ -26,7 +26,7 @@ try {
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id_user">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,7 +37,6 @@ try {
         const sekarang = new Date();
         sekarang.setHours(sekarang.getHours() + jam);
 
-        // Gunakan waktu lokal bukan UTC
         const tahun  = sekarang.getFullYear();
         const bulan  = String(sekarang.getMonth() + 1).padStart(2, '0');
         const hari   = String(sekarang.getDate()).padStart(2, '0');
@@ -50,7 +49,6 @@ try {
         document.getElementById('inputWaktu').value = waktu;
         document.getElementById('previewWaktu').innerText = `⏳ Berakhir: ${waktu}`;
 
-        // Highlight tombol terpilih (Versi Gelap)
         document.querySelectorAll('.btn-durasi').forEach(btn => {
             btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-500');
             btn.classList.add('bg-slate-900', 'text-slate-300', 'border-slate-800');
@@ -82,7 +80,6 @@ try {
                     <span class="h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span> ➕ Tambah Komoditas Lelang
                 </h3>
 
-                <!-- NOTIFIKASI BANNER (DISESUAIKAN GELAP) -->
                 <?php if (isset($_GET['status'])): ?>
                     <?php if ($_GET['status'] === 'insert_success'): ?>
                         <div class="bg-emerald-950/50 border border-emerald-800 text-emerald-400 text-xs px-4 py-3 rounded-xl mb-4 font-medium">
@@ -140,7 +137,6 @@ try {
             </div>
         </div>
 
-        <!-- KOLOM KANAN: MONITORING TABLE (TEMA GELAP) -->
         <div class="lg:col-span-2 flex flex-col">
             <div class="bg-slate-900 text-slate-100 rounded-2xl border border-slate-800 overflow-hidden shadow-xl flex-1">
                 <div class="p-5 border-b border-slate-800 bg-slate-900/50 flex justify-between items-center">
@@ -169,7 +165,6 @@ try {
                             <?php else: ?>
                                 <?php foreach ($semua_barang as $barang): ?>
                                     <tr class="hover:bg-slate-950/30 transition duration-150">
-                                        <!-- KOLOM PRATINJAU FOTO DI ADMIN -->
                                         <td class="py-3 px-4">
                                             <?php if (!empty($barang['gambar']) && file_exists('../DashboardUser/img/' . $barang['gambar'])): ?>
                                                 <img src="../DashboardUser/img/<?php echo $barang['gambar']; ?>" class="w-12 h-12 object-cover rounded-xl border border-slate-800 shadow-sm">

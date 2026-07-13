@@ -25,7 +25,6 @@ else {
 const success = "<?= htmlspecialchars($success) ?>";
 const targetUrl = "<?= $target ?>";
 
-// list of success
 if (success === "resend") {
     Swal.fire({
         icon: "success",

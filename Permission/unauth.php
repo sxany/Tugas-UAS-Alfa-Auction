@@ -20,7 +20,6 @@ else {
 }
 ?> 
 
-<!-- error visual -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -36,8 +35,6 @@ else {
 const error = "<?= htmlspecialchars($error) ?>";
 const targetUrl = "<?= $target ?>";
 
-// list of error
-// login page: empty, invalid, emailnotfound
 if (error === "empty") {
     Swal.fire({
         icon: "warning",
@@ -66,7 +63,6 @@ else if (error === "emailnotfound") {
     });
 }
 
-// register page: usernameregistered, emailregistered table users
 else if (error === "usernameregistered") {
     Swal.fire({
         icon: "error",
@@ -86,7 +82,6 @@ else if (error === "emailregistered") {
     });
 }
 
-// register page: usernametaken, emailtaken table temp_registrations
 else if (error === "usernametaken") {
     Swal.fire({
         icon: "error",
@@ -106,7 +101,6 @@ else if (error === "emailtaken") {
     });
 }
 
-// otp page: otpempty, otpinvalid, retry
 else if (error === "retry") {
     Swal.fire({
         icon: "warning",
@@ -135,7 +129,6 @@ else if (error === "otpinvalid") {
     });
 }
 
-// reset password 
 else if (error === "emailnotfound2") {
     Swal.fire({
         icon: "error",
@@ -163,7 +156,6 @@ else if (error === "otpresetinvalid") {
         window.location.href = targetUrl;
     });
 }
-//unauthorized log
 else {
     Swal.fire({
         icon: "warning",
